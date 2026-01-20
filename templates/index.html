@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ name }} | Premium Portfolio</title>
+    <meta name="description" content="{{ summary }}">
+    <meta property="og:title" content="{{ og_title }}">
+    <meta property="og:description" content="{{ og_desc }}">
+    <meta property="og:type" content="website">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family={{ font_heading }}:wght@600;800&family={{ font_body }}:wght@300;400;600&display=swap"
+        rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <!-- Navigation -->
+    <nav class="animate-fade">
+        <div class="logo">{{ name.split()[0] }}<span style="color:var(--accent-2);">.</span></div>
+        <ul>
+            <li><a href="#home">Home</a></li>
+            <li><a href="#skills">Skills</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#ask-me">Ask AI</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero Section -->
+    <header id="home" class="hero animate-fade">
+        <div class="container">
+            <h1>Hi, I'm {{ name }}</h1>
+            <span class="tag">{{ title }}</span>
+            <p class="summary">{{ summary }}</p>
+
+            <div class="btn-group">
+                {% if linkedin %}
+                <a href="{{ linkedin }}" target="_blank" class="btn primary">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </a>
+                {% endif %}
+
+                {% if github %}
+                <a href="{{ github }}" target="_blank" class="btn">
+                    <i class="fab fa-github"></i> GitHub
+                </a>
+                {% endif %}
+
+                {% if has_resume %}
+                <a href="resume.pdf" class="btn" download>
+                    <i class="fas fa-file-download"></i> Download Resume
+                </a>
+                {% endif %}
+            </div>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <!-- Skills Section -->
+        <section id="skills" class="animate-fade delay-1">
+            <h2 class="section-title"><i class="fas fa-code"></i> Technical Skills</h2>
+            <div class="skills-grid">
+                {% for s in skills %}
+                <div class="skill-tag">{{ s }}</div>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Projects Section -->
+        <section id="projects" class="animate-fade delay-2">
+            <h2 class="section-title"><i class="fas fa-layer-group"></i> Featured Projects</h2>
+            <div class="projects-grid">
+                {% for p in projects %}
+                <article class="project-card">
+                    <h3>{{ p.name }}</h3>
+                    <p>{{ p.desc }}</p>
+                    {% if p.tech %}
+                    <div class="tech-stack">
+                        <i class="fas fa-laptop-code"></i> {{ p.tech }}
+                    </div>
+                    {% endif %}
+                </article>
+                {% endfor %}
+            </div>
+        </section>
+
+        <!-- Education & Certifications -->
+        <section id="education" class="animate-fade delay-3">
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px;">
+
+                <div>
+                    <h2 class="section-title"><i class="fas fa-graduation-cap"></i> Education</h2>
+                    {% for e in education %}
+                    <div class="timeline-item">
+                        <h4>{{ e }}</h4>
+                        <p>Academic Qualification</p>
+                    </div>
+                    {% endfor %}
+                </div>
+
+                {% if certifications %}
+                <div>
+                    <h2 class="section-title"><i class="fas fa-certificate"></i> Certifications</h2>
+                    {% for c in certifications %}
+                    <div class="timeline-item" style="border-left-color: var(--accent-3);">
+                        <h4>{{ c }}</h4>
+                        <p>Professional Certificate</p>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="animate-fade delay-3">
+            <div class="contact-box">
+                <h2>Let's Work Together</h2>
+                <p>Feel free to reach out for collaborations or just a friendly hello!</p>
+
+                <div class="contact-actions">
+                    <a href="mailto:{{ email }}" class="btn primary">
+                        <i class="fas fa-envelope"></i> {{ email }}
+                    </a>
+                    {% if phone %}
+                    <a href="tel:{{ phone }}" class="btn">
+                        <i class="fas fa-phone"></i> {{ phone }}
+                    </a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Ask About Me (AI) Section -->
+        <section id="ask-me" class="animate-fade delay-3">
+            <div class="contact-box"
+                style="background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.02) 100%);">
+                <h2><i class="fas fa-robot"></i> Ask About Me (AI)</h2>
+                <p>Common questions about my profile, answered by AI.</p>
+
+                <div style="text-align: left; margin-top: 30px; display: grid; gap: 15px;">
+                    {% for q, a in faq %}
+                    <div
+                        style="background: rgba(0,0,0,0.2); padding: 15px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.05);">
+                        <strong style="color: var(--accent-1); display: block; margin-bottom: 5px;">Q: {{ q }}</strong>
+                        <span style="opacity: 0.8;">A: {{ a }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>© {{ name }} | Built with Resume2PortfolioAI Pro</p>
+    </footer>
+
+    <button onclick="topFunction()" id="scrollTop" title="Go to top"><i class="fas fa-arrow-up"></i></button>
+
+    <!-- Simple Scroll Reveal Script -->
+    <script>
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = 1;
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        });
+
+        document.querySelectorAll('.animate-fade').forEach((el) => observer.observe(el));
+
+        // Scroll to Top
+        let mybutton = document.getElementById("scrollTop");
+        window.onscroll = function () { scrollFunction() };
+
+        function scrollFunction() {
+            if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+</body>
+
+</html>
